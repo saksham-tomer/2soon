@@ -1,3 +1,7 @@
+import { Navbar } from "@/components/global/Navbar/Navbar";
+
 export default function Home() {
-  return (<div>This is senpai</div> );
+  return (<main>
+    <Navbar />
+  </main> );
 }
