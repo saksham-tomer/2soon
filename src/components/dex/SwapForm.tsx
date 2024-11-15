@@ -9,6 +9,7 @@ import TokenInput from "./tokenInput";
 import Wallets from "../walletprovider/Wallets";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { SwapButton } from "./SwapButton";
+import { LimitOrder } from "./LimitOrder";
 
 const SwapForm: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"Swap" | "Limit">("Swap");
@@ -27,7 +28,7 @@ const SwapForm: React.FC = () => {
   };
 
   return (
-    <div className="flex mt-5 p-5 items-center justify-center">
+    <div className="flex flex-col min-h-screen mt-5 gap-20 p-5 items-center justify-center">
       <Card className="w-full max-w-md space-y-6 bg-gray-700/25 backdrop-blur-xl p-4 text-white/80 border-none rounded-3xl">
         <Tabs
           value={activeTab}
@@ -35,8 +36,20 @@ const SwapForm: React.FC = () => {
           className="w-full"
         >
           <TabsList className="bg-neutral-950/15">
-            <TabsTrigger value="Swap">Swap</TabsTrigger>
-            <TabsTrigger value="Limit">Limit</TabsTrigger>
+            <TabsTrigger
+              value="Swap"
+              className="text-white px-4 py-2 rounded-md transition-colors duration-200
+                         data-[state=active]:bg-gray-700/25 data-[state=active]:text-blue-400"
+            >
+              Swap
+            </TabsTrigger>
+            <TabsTrigger
+              value="Limit"
+              className="text-white px-4 py-2 rounded-md transition-colors duration-200
+                         data-[state=active]:bg-gray-700/25 data-[state=active]:text-blue-400"
+            >
+              Limit
+            </TabsTrigger>
           </TabsList>
           <TabsContent value="Swap">
             <TokenInput
@@ -97,9 +110,12 @@ const SwapForm: React.FC = () => {
           </TabsContent>
         </Tabs>
       </Card>
+      <div className="w-full">
+        <hr  className="w-[70vw] border-t-1 border-gray-500 m-auto mb-5 opacity-10"/>
+        <LimitOrder />
+      </div>
     </div>
   );
 };
 
 export default SwapForm;
-
