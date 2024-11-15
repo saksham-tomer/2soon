@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useAppStore } from "@/stores/store";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -12,20 +12,29 @@ import { SwapButton } from "./SwapButton";
 import { LimitOrder } from "./LimitOrder";
 
 const SwapForm: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<"Swap" | "Limit">("Swap");
-  const [selectedPayToken, setSelectedPayToken] = useState<string>("USDC");
-  const [selectedReceiveToken, setSelectedReceiveToken] =
-    useState<string>("ETH");
-  const [payAmount, setPayAmount] = useState<string>("");
-  const [receiveAmount, setReceiveAmount] = useState<string>("");
+  const {
+    selectedPayToken,
+    setSelectedPayToken,
+    selectedReceiveToken,
+    setSelectedReceiveToken,
+    payAmount,
+    setPayAmount,
+    receiveAmount,
+    setReceiveAmount,
+    handleSwapDirection,
+    activeTab,
+    setActiveTab,
+    limitBuyToken,
+    setLimitBuyToken,
+    limitBuyAmount,
+    setLimitBuyAmount,
+    limitPayToken,
+    setLimitPayToken,
+    limitPayAmount,
+    setLimitPayAmount,
+  } = useAppStore();
 
   const { connected } = useWallet();
-  const handleSwapDirection = () => {
-    setSelectedPayToken(selectedReceiveToken);
-    setSelectedReceiveToken(selectedPayToken);
-    setPayAmount(receiveAmount);
-    setReceiveAmount(payAmount);
-  };
 
   return (
     <div className="flex flex-col min-h-screen mt-5 gap-20 p-5 items-center justify-center">
@@ -84,24 +93,24 @@ const SwapForm: React.FC = () => {
           <TabsContent value="Limit" className="flex flex-col gap-2">
             <TokenInput
               label="Limit(Buy at)"
-              token={selectedReceiveToken}
-              amount={receiveAmount}
-              onTokenChange={setSelectedReceiveToken}
-              onAmountChange={setReceiveAmount}
+              token={limitBuyToken}
+              amount={limitBuyAmount}
+              onTokenChange={setLimitBuyToken}
+              onAmountChange={setLimitBuyAmount}
             />
             <TokenInput
               label="You pay"
-              token={selectedPayToken}
-              amount={payAmount}
-              onTokenChange={setSelectedPayToken}
-              onAmountChange={setPayAmount}
+              token={limitPayToken}
+              amount={limitPayAmount}
+              onTokenChange={setLimitPayToken}
+              onAmountChange={setLimitPayAmount}
             />
             <TokenInput
               label="You receive"
-              token={selectedReceiveToken}
-              amount={receiveAmount}
-              onTokenChange={setSelectedReceiveToken}
-              onAmountChange={setReceiveAmount}
+              token={limitBuyToken}
+              amount={limitBuyAmount}
+              onTokenChange={setLimitBuyToken}
+              onAmountChange={setLimitBuyAmount}
             />
 
             <div className="flex justify-center items-center mt-5">
@@ -111,7 +120,7 @@ const SwapForm: React.FC = () => {
         </Tabs>
       </Card>
       <div className="w-full">
-        <hr  className="w-[70vw] border-t-1 border-gray-500 m-auto mb-5 opacity-10"/>
+        <hr className="w-[70vw] border-t-1 border-gray-500 m-auto mb-5 opacity-10" />
         <LimitOrder />
       </div>
     </div>

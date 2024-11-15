@@ -4,8 +4,13 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import Wallets from "@/components/walletprovider/Wallets";
 import { CancelAllOrderButton } from "./CancelAllOrderButton";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { useAppStore } from "@/stores/store"; 
+
 export function LimitOrder() {
   const { connected } = useWallet();
+  const activeTab = useAppStore((state) => state.activeTab);
+
+  if (activeTab !== "Limit") return null;
 
   return (
     <div className="p-5">

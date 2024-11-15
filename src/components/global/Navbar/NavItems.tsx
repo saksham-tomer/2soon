@@ -1,10 +1,20 @@
+"use client";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ChevronDown, DollarSign, Coins, Star, Users, CheckSquare } from "lucide-react";
+import {
+  ChevronDown,
+  DollarSign,
+  Coins,
+  Star,
+  Users,
+  CheckSquare,
+} from "lucide-react";
+import { useAppStore } from "@/stores/store";
 
 type NavItem = {
   name: string;
@@ -14,10 +24,13 @@ type NavItem = {
     icon: React.ReactNode;
     label: string;
     description?: string;
+    onClick?: () => void;
   }[];
 };
 
 export const NavItems = () => {
+  const setActiveTab = useAppStore((state) => state.setActiveTab);
+
   const items: NavItem[] = [
     {
       name: "Trade",
@@ -28,6 +41,7 @@ export const NavItems = () => {
           label: "Simple mode",
           icon: <DollarSign className="h-4 w-4 text-gray-400" />,
           description: "Quick and easy trading mode",
+          onClick: () => setActiveTab("Swap"),
         },
         {
           label: "Advanced mode",
@@ -38,6 +52,7 @@ export const NavItems = () => {
           label: "Limit order",
           icon: <Star className="h-4 w-4 text-gray-400" />,
           description: "Place orders at a specific price",
+          onClick: () => setActiveTab("Limit"),
         },
       ],
     },
@@ -74,7 +89,7 @@ export const NavItems = () => {
   ];
 
   return (
-    <div className="flex flex-col lg:flex-row  lg:items-center gap-6 text-xl">
+    <div className="flex flex-col lg:flex-row lg:items-center gap-6 text-xl">
       {items.map((item) => (
         <div key={item.name} className="relative">
           {item.hasDropdown ? (
@@ -88,6 +103,7 @@ export const NavItems = () => {
                   <DropdownMenuItem
                     key={dropdownItem.label}
                     className="flex flex-col items-start gap-1 p-4 hover:bg-gray-800 focus:bg-gray-800 cursor-pointer"
+                    onClick={dropdownItem.onClick} // Call onClick handler if present
                   >
                     <div className="flex items-center gap-2">
                       {dropdownItem.icon}
