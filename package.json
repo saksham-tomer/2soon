@@ -21,6 +21,7 @@
     "@solana/web3.js": "1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "dex": "file:",
     "lucide-react": "^0.456.0",
     "next": "14.2.17",
     "react": "^18",
